@@ -14,10 +14,10 @@ La alcancía permite realizar operaciones esenciales como:
 
 Para evaluar el proyecto, por favor navegue entre las diferentes ramas de este repositorio. Cada una contiene el código fuente correspondiente y un `README` detallado con su justificación teórica:
 
-1. 🍝 **[Rama: Código Espagueti](https://github.com/TU_USUARIO/alcancia/tree/feature/codigo-espagueti)**
+1. 🍝 **[Rama: Código Espagueti](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/codigo-espagueti)**
    * *Descripción:* Todo el sistema (lógica, datos e interfaz) concentrado en un único flujo desestructurado. Demuestra los problemas de acoplamiento y mantenibilidad.
    
-2. 🥞 **[Rama: Monolítico por Capas](https://github.com/TU_USUARIO/alcancia/tree/feature/monolitico-capas)**
+2. 🥞 **[Rama: Monolítico por Capas](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/monolitico-capas)**
    * *Descripción:* Separación de responsabilidades de forma técnica en tres capas clásicas: Presentación (Controladores), Negocio (Servicios) y Datos (Repositorios).
 
 3. ⬢ **[Rama: Enfoque DDD](https://github.com/TU_USUARIO/alcancia/tree/feature/enfoque-ddd)**
@@ -27,9 +27,9 @@ Para evaluar el proyecto, por favor navegue entre las diferentes ramas de este r
 
 ## 🛠️ Tecnologías Utilizadas
 
-* **Lenguaje de Programación:** [Escribe aquí tu lenguaje, ej: Python / Java / TypeScript]
-* **Framework/Librerías:** [Escribe aquí si usas alguno, ej: FastAPI / Spring Boot / Express]
-* **Persistencia:** En memoria / [Escribe aquí tu base de datos, ej: SQLite]
+* **Lenguaje de Programación:** Java
+* **Framework/Librerías:** Spring Boot
+* **Persistencia:** En memoria
 * **Herramienta de Control de Versiones:** Git & GitHub
 
 ---
@@ -38,4 +38,4 @@ Para evaluar el proyecto, por favor navegue entre las diferentes ramas de este r
 
 1. Clone este repositorio en su máquina local:
 ```bash
-   git clone [https://github.com/TU_USUARIO/alcancia.git](https://github.com/TU_USUARIO/alcancia.git)
+   
