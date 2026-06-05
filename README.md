@@ -1,6 +1,6 @@
-# Alcancía Digital: Proyecto de Arquitectura Hexagonal
+# Alcancía Digital: Proyecto de Alcancia Enfoque DDD
 
-Este proyecto es una implementación de una aplicación de gestión de ahorros ("Alcancía Digital") desarrollada utilizando **Arquitectura Hexagonal (Ports and Adapters)** y principios de **Domain-Driven Design (DDD)**.
+Este proyecto es una implementación de una aplicación de gestión de ahorros ("Alcancía Digital") desarrollada utilizando **Principios de **Domain-Driven Design (DDD)**.
 
 ## 🚀 Arquitectura
 El objetivo principal es mantener la lógica de negocio aislada de los detalles técnicos (base de datos, frameworks, UI).
@@ -21,30 +21,14 @@ El objetivo principal es mantener la lógica de negocio aislada de los detalles 
 2. **Arquitectura Desacoplada:** El dominio está protegido, permitiendo cambios en la persistencia o en el framework sin afectar las reglas de negocio.
 3. **UI Dinámica:** Visualización en tiempo real del progreso de ahorro con lógica condicional en la capa de vista.
 
-## ⚙️ Cómo ejecutar
-1. Asegúrate de tener **JDK 17** instalado.
-2. Clona el repositorio y navega a la carpeta del proyecto.
-3. Compila el proyecto:
-```bash
-   mvn clean compile
+---
+## ⚙️ Configuración de entorno
+Para ejecutar esta versión:
+1. Asegúrese de tener instalado **JDK 17** y **Maven**.
+2. Compile y ejecute:
+   ```bash
+   mvn clean spring-boot:run
+   Acceda a la aplicación en: http://localhost:8080
+---
 
-Ejecución de la aplicación:
-Inicia el servidor con el siguiente comando:
-
-Bash
-mvn spring-boot:run
-Acceso al sistema:
-Abre tu navegador y dirígete a:
-👉 http://localhost:8080/
-
-Consola de base de datos H2:
-Para inspeccionar los datos en tiempo real, accede a:
-👉 http://localhost:8080/h2-console
-
-JDBC URL: jdbc:h2:mem:alcancia_ddd
-
-User Name: sa
-
-Password: (dejar vacío)
-
-Desarrollado para la Evaluación Sumativa de Arquitectura de Sistemas.
+  
