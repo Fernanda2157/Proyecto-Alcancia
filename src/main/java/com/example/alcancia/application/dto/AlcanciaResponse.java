@@ -1,6 +1,6 @@
-package com.universidad.alcancia.application.dto;
+package com.example.alcancia.application.dto;
 
-import com.universidad.alcancia.domain.model.Alcancia;
+import com.example.alcancia.domain.model.Alcancia;
 
 public class AlcanciaResponse {
     private Long id;

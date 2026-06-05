@@ -11,13 +11,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-// Puente entre el Dominio rico y JPA
 @Component
 public class AlcanciaJpaAdapter implements AlcanciaRepository {
 
     private final SpringAlcanciaJpaRepository jpa;
 
-    public AlcanciaJpaAdapter(SpringAlcanciaJpaRepository jpa) { this.jpa = jpa; }
+    public AlcanciaJpaAdapter(SpringAlcanciaJpaRepository jpa) { 
+        this.jpa = jpa; 
+    }
 
     @Override
     public Alcancia guardar(Alcancia a) {
@@ -31,7 +32,9 @@ public class AlcanciaJpaAdapter implements AlcanciaRepository {
 
     @Override
     public List<Alcancia> buscarTodas() {
-        return jpa.findAll().stream().map(this::toDomain).collect(Collectors.toList());
+        return jpa.findAll().stream()
+                .map(this::toDomain)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -41,13 +44,24 @@ public class AlcanciaJpaAdapter implements AlcanciaRepository {
 
     private AlcanciaJpaEntity toJpa(Alcancia a) {
         AlcanciaJpaEntity e = new AlcanciaJpaEntity(
-                a.getNombreAhorrista(), a.getSaldo(), a.getMeta(), a.getEstado().name());
+                a.getNombreAhorrista(), 
+                a.getSaldo(), 
+                a.getMeta(), 
+                a.getEstado().name()
+        );
         e.setId(a.getId());
         return e;
     }
 
     private Alcancia toDomain(AlcanciaJpaEntity e) {
-        return new Alcancia(e.getId(), e.getNombreAhorrista(),
-                e.getSaldo(), e.getMeta(), EstadoAlcancia.valueOf(e.getEstado()));
+        EstadoAlcancia estado = EstadoAlcancia.valueOf(e.getEstado().toUpperCase());
+        
+        return new Alcancia(
+                e.getId(), 
+                e.getNombreAhorrista(),
+                e.getSaldo(), 
+                e.getMeta(), 
+                estado
+        );
     }
 }

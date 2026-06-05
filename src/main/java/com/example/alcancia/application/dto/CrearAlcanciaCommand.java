@@ -1,4 +1,4 @@
-package com.universidad.alcancia.application.dto;
+package com.example.alcancia.application.dto;
 
 public class CrearAlcanciaCommand {
     private String nombreAhorrista;

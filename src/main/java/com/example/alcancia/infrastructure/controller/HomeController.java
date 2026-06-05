@@ -1,4 +1,4 @@
-package com.universidad.alcancia.infrastructure.controller;
+package com.example.alcancia.infrastructure.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

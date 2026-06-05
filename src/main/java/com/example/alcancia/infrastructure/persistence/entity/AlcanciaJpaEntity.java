@@ -1,4 +1,4 @@
-package com.universidad.alcancia.infrastructure.persistence.entity;
+package com.example.alcancia.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
 

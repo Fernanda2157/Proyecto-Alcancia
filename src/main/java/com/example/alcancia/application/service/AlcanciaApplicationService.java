@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// Orquestador delgado — NO contiene reglas de negocio
 @Service
 public class AlcanciaApplicationService {
 
@@ -34,19 +33,18 @@ public class AlcanciaApplicationService {
     }
 
     public AlcanciaResponse crearAlcancia(CrearAlcanciaCommand cmd) {
-        // El constructor del Agregado valida nombre y meta
+      
         Alcancia a = new Alcancia(cmd.getNombreAhorrista(), cmd.getMeta());
         return new AlcanciaResponse(repository.guardar(a), "Alcancía creada exitosamente");
     }
 
     public AlcanciaResponse depositar(Long id, double monto) {
-        // 1. Cargar el Agregado
+        
         Alcancia a = repository.buscarPorId(id)
                 .orElseThrow(() -> new AlcanciaException("No existe alcancía con ID: " + id));
-        // 2. Monto valida Regla 1 (monto > 0)
-        // 3. El Agregado aplica Reglas 2 y 3
+       
         a.depositar(new Monto(monto));
-        // 4. Persistir
+        
         Alcancia guardada = repository.guardar(a);
         String msg = guardada.estaCompletada()
                 ? "¡Felicidades " + guardada.getNombreAhorrista() + "! Meta alcanzada."

@@ -22,7 +22,7 @@
 <body>
 <div th:classappend="${alcancia.completada} ? 'done'" class="header-band">
     <div class="container">
-        <h2>🏺 <span th:text="${alcancia.nombreAhorrista}"></span>
+        <h2> <span th:text="${alcancia.nombreAhorrista}"></span>
             <small style="font-size:13px; margin-left:10px;">
                 <span th:if="${alcancia.completada}"  class="label label-success">✓ COMPLETADA</span>
                 <span th:unless="${alcancia.completada}" class="label label-warning">ACTIVA</span>
@@ -39,10 +39,16 @@
         <div class="col-md-7">
             <div class="card">
                 <h4>Progreso de Ahorro</h4>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-success"
-                         th:style="'width:' + ${alcancia.porcentaje} + '%; min-width:40px;'"
-                         th:text="${#numbers.formatDecimal(alcancia.porcentaje,1,1)} + '%'">
+                <<div class="progress">
+                    <div th:if="${alcancia.porcentaje > 0}" 
+                        class="progress-bar progress-bar-success"
+                        th:style="'width:' + ${alcancia.porcentaje} + '%'"
+                        th:text="${#numbers.formatDecimal(alcancia.porcentaje,1,1)} + '%'">
+                    </div>
+                    <div th:unless="${alcancia.porcentaje > 0}" 
+                        class="progress-bar" 
+                        style="width: 100%; background-color: #e9ecef; color: #999;">
+                        0%
                     </div>
                 </div>
                 <div class="row" style="margin-top:15px;">
@@ -66,29 +72,21 @@
                     </div>
                 </div>
                 <div th:if="${alcancia.completada}" class="alert alert-success" style="margin-top:15px; margin-bottom:0;">
-                    🎉 ¡Meta alcanzada! Alcancía cerrada por el Aggregate Root.
+                ¡Meta alcanzada! Alcancía cerrada.
                 </div>
 
-                <!-- Nota DDD -->
-                <div class="note-ddd">
-                    <strong>Aggregate Root:</strong> <code>alcancia.depositar(new Monto(valor))</code><br>
-                    El objeto <code>Monto</code> valida regla 1. El agregado valida reglas 2 y 3.<br>
-                    No existe <code>setSaldo()</code> ni <code>setEstado()</code> públicos.
-                </div>
             </div>
         </div>
 
         <div class="col-md-5">
             <div class="card" th:unless="${alcancia.completada}">
-                <h4>💰 Realizar Depósito</h4>
+                <h4>Realizar Depósito</h4>
                 <form th:action="@{/alcancia/{id}/depositar(id=${alcancia.id})}" method="post">
                     <div class="form-group">
                         <label>Monto ($) *</label>
                         <input type="number" name="monto" class="form-control"
                                placeholder="Ej: 50.00" step="0.01" min="0.01" required>
-                        <span class="help-block" style="font-size:11px;">
-                            Si el monto es ≤ 0, <code>new Monto()</code> lanza excepción
-                        </span>
+
                     </div>
                     <button type="submit" class="btn btn-success btn-block">Depositar</button>
                 </form>
@@ -97,7 +95,7 @@
                 <h4>Estado</h4>
                 <p class="text-center" style="font-size:36px;">✅</p>
                 <p class="text-center text-muted">
-                    El Aggregate Root impide depósitos en alcancías COMPLETADAS.
+                    Alcancías COMPLETADAS.
                 </p>
             </div>
 

@@ -2,7 +2,7 @@ package com.example.alcancia.domain.model;
 
 import com.example.alcancia.domain.exception.AlcanciaException;
 
-// VALUE OBJECT: inmutable, se autovalida en el constructor
+
 public final class Monto {
     private final double valor;
 
