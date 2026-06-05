@@ -1,41 +1,32 @@
-# 🪙 Proyecto Alcancía: Evolución de Arquitecturas de Software
+# Alcancía Digital: Rama de Código Espagueti (Anti-patrón)
 
-Este proyecto consiste en el desarrollo de un sistema de gestión para una **Alcancía Digital**, implementado bajo tres enfoques arquitectónicos diferentes. El objetivo es demostrar la evolución del código, desde malas prácticas hasta patrones de diseño profesionales y altamente escalables.
+Este repositorio contiene una implementación inicial de la "Alcancía Digital" diseñada bajo el anti-patrón **"Objeto Dios" (God Object)**.
 
-La alcancía permite realizar operaciones esenciales como:
-* Depósito de dinero (ahorrar).
-* Retiro de dinero (romper alcancía o retiros parciales).
-* Consulta de saldo actual.
-* Historial de transacciones.
+## ⚠️ Sobre esta rama
+Esta implementación deliberadamente **no sigue** buenas prácticas de arquitectura. El objetivo de este código es servir como punto de comparación para demostrar las limitaciones de un diseño acoplado y la necesidad de aplicar arquitecturas limpias (como la Hexagonal).
 
----
+## 🚩 Problemas Técnicos (Anti-patrones identificados)
+1. **Violación del Principio de Responsabilidad Única (SRP):** La clase `AlcanciaSpaghettiApplication` lo hace todo:
+   - Gestiona el arranque de Spring Boot.
+   - Define el modelo de datos (`@Entity`).
+   - Implementa la lógica del controlador web (`@Controller`).
+   - Contiene la lógica de persistencia.
+   - Ejecuta las reglas de negocio.
+2. **Alto Acoplamiento:** Los cambios en la base de datos o en la interfaz obligan a modificar la lógica de negocio, haciendo el sistema frágil.
+3. **Escalabilidad nula:** Debido a la mezcla de responsabilidades, añadir una nueva funcionalidad implica un alto riesgo de introducir errores en partes no relacionadas del código.
 
-## 📑 Estructura del Proyecto (Ramas)
-
-Para evaluar el proyecto, por favor navegue entre las diferentes ramas de este repositorio. Cada una contiene el código fuente correspondiente y un `README` detallado con su justificación teórica:
-
-1. 🍝 **[Rama: Código Espagueti](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/codigo-espagueti)**
-   * *Descripción:* Todo el sistema (lógica, datos e interfaz) concentrado en un único flujo desestructurado. Demuestra los problemas de acoplamiento y mantenibilidad.
-   
-2. 🥞 **[Rama: Monolítico por Capas](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/monolitico-capas)**
-   * *Descripción:* Separación de responsabilidades de forma técnica en tres capas clásicas: Presentación (Controladores), Negocio (Servicios) y Datos (Repositorios).
-
-3. ⬢ **[Rama: Enfoque DDD](https://github.com/TU_USUARIO/alcancia/tree/feature/enfoque-ddd)**
-   * *Descripción:* Arquitectura guiada por el dominio del negocio. Centrada en la entidad `Alcancia`, separando las reglas puras del negocio de la infraestructura tecnológica.
+## 🛠 Tecnologías
+- **Java 17**
+- **Spring Boot 3.x**
+- **Thymeleaf** (Capa de presentación integrada en el mismo archivo)
+- **H2 Database** (Persistencia en memoria)
 
 ---
-
-## 🛠️ Tecnologías Utilizadas
-
-* **Lenguaje de Programación:** Java
-* **Framework/Librerías:** Spring Boot
-* **Persistencia:** En memoria
-* **Herramienta de Control de Versiones:** Git & GitHub
-
+## ⚙️ Configuración de entorno
+Para ejecutar esta versión:
+1. Asegúrese de tener instalado **JDK 17** y **Maven**.
+2. Compile y ejecute:
+   ```bash
+   mvn clean spring-boot:run
+   Acceda a la aplicación en: http://localhost:8080
 ---
-
-## 🚀 Cómo ejecutar y navegar el proyecto
-
-1. Clone este repositorio en su máquina local:
-```bash
-   
