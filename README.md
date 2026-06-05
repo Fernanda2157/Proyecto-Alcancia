@@ -20,7 +20,7 @@ Para evaluar el proyecto, por favor navegue entre las diferentes ramas de este r
 2. 🥞 **[Rama: Monolítico por Capas](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/monolitico-capas)**
    * *Descripción:* Separación de responsabilidades de forma técnica en tres capas clásicas: Presentación (Controladores), Negocio (Servicios) y Datos (Repositorios).
 
-3. ⬢ **[Rama: Enfoque DDD](https://github.com/TU_USUARIO/alcancia/tree/feature/enfoque-ddd)**
+3. ⬢ **[Rama: Enfoque DDD](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/enfoque-ddd)**
    * *Descripción:* Arquitectura guiada por el dominio del negocio. Centrada en la entidad `Alcancia`, separando las reglas puras del negocio de la infraestructura tecnológica.
 
 ---
