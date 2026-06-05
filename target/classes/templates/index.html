@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rama 1 — Código Espagueti</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        body { background: #f5f5f5; }
+        .header-band {
+            background: #c0392b;
+            color: white;
+            padding: 18px 0;
+            margin-bottom: 30px;
+        }
+        .header-band h2 { margin: 0; font-size: 22px; }
+        .header-band p  { margin: 4px 0 0; opacity: 0.85; font-size: 13px; }
+        .badge-rama {
+            background: rgba(255,255,255,0.25);
+            border-radius: 4px;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .card {
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+        }
+        .card h4 { margin-top: 0; color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .progress { height: 22px; border-radius: 11px; }
+        .progress-bar { font-size: 13px; line-height: 22px; font-weight: bold; }
+        .stat-box {
+            text-align: center;
+            background: #f8f8f8;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+            padding: 12px 8px;
+        }
+        .stat-box .valor { font-size: 20px; font-weight: bold; color: #2c3e50; }
+        .stat-box .etiq  { font-size: 11px; color: #888; text-transform: uppercase; }
+        .estado-activa    { color: #e67e22; font-weight: bold; }
+        .estado-completada{ color: #27ae60; font-weight: bold; }
+        .msg-ok  { background: #dff0d8; color: #3c763d; border: 1px solid #d6e9c6; border-radius: 4px; padding: 10px 14px; margin-bottom: 15px; }
+        .msg-err { background: #f2dede; color: #a94442; border: 1px solid #ebccd1; border-radius: 4px; padding: 10px 14px; margin-bottom: 15px; }
+        .code-note {
+            background: #2d2d2d; color: #f8f8f2;
+            border-radius: 4px; padding: 8px 12px;
+            font-family: monospace; font-size: 12px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-band">
+    <div class="container">
+        <span class="badge-rama">⚠ Código Espagueti</span>
+        <h2>🏺 Alcancía Digital — Rama 1</h2>
+        <p>Todo en un solo archivo: arranque + base de datos + lógica + controlador web</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+
+        <!-- COLUMNA IZQUIERDA: Estado + Depositar -->
+        <div class="col-md-7">
+
+            <!-- Mensaje de resultado -->
+            <div th:if="${mensaje != null and !#strings.isEmpty(mensaje)}">
+                <div th:classappend="${#strings.startsWith(mensaje,'ERROR')} ? 'msg-err' : 'msg-ok'"
+                     th:text="${mensaje}">
+                </div>
+            </div>
+
+            <!-- Estado actual -->
+            <div class="card">
+                <h4>Estado de la Alcancía</h4>
+
+                <p>
+                    <strong>Ahorrista:</strong> <span th:text="${ahorrista}"></span>
+                    &nbsp;
+                    <span th:classappend="${estado == 'COMPLETADA'} ? 'estado-completada' : 'estado-activa'"
+                          th:text="'[' + ${estado} + ']'">
+                    </span>
+                </p>
+
+                <!-- Barra de progreso -->
+                <div class="progress">
+                    <div class="progress-bar"
+                         th:classappend="${estado == 'COMPLETADA'} ? 'progress-bar-success' : 'progress-bar-warning'"
+                         th:style="'width: ' + (${progreso} > 100 ? 100 : ${progreso}) + '%'"
+                         th:text="${#numbers.formatDecimal(progreso,1,1)} + '%'">
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:15px;">
+                    <div class="col-xs-4">
+                        <div class="stat-box">
+                            <div class="valor" th:text="'$' + ${#numbers.formatDecimal(saldo,1,2)}"></div>
+                            <div class="etiq">Saldo</div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="stat-box">
+                            <div class="valor" th:text="'$' + ${#numbers.formatDecimal(objetivo,1,2)}"></div>
+                            <div class="etiq">Meta</div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="stat-box">
+                            <div class="valor"
+                                 th:text="${estado == 'COMPLETADA'} ? '¡Listo!' : '$' + ${#numbers.formatDecimal(falta,1,2)}">
+                            </div>
+                            <div class="etiq">Falta</div>
+                        </div>
+                    </div>
+                </div>
+
+            
+            </div>
+
+            <!-- Formulario depositar -->
+            <div class="card">
+                <h4>💰 Realizar Depósito</h4>
+
+                <form th:action="@{/depositar}" method="post">
+                    <div class="form-group">
+                        <label>Monto a depositar ($)</label>
+                        <input type="number" name="monto" class="form-control"
+                               placeholder="Ej: 25.00" step="0.01"
+                               th:disabled="${estado == 'COMPLETADA'}" required>
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-block"
+                            th:disabled="${estado == 'COMPLETADA'}">
+                        Depositar
+                    </button>
+                    <div th:if="${estado == 'COMPLETADA'}"
+                         class="text-center" style="margin-top:8px; color:#888; font-size:13px;">
+                        Alcancía completada — no se permiten más depósitos
+                    </div>
+                </form>
+
+                <!-- Reiniciar -->
+                <form th:action="@{/reiniciar}" method="post" style="margin-top:10px;">
+                    <button type="submit" class="btn btn-default btn-block"
+                            onclick="return confirm('¿Reiniciar la alcancía?')">
+                        Reiniciar alcancía
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- COLUMNA DERECHA: Configurar + Nota académica -->
+        <div class="col-md-5">
+
+            <!-- Configurar alcancía -->
+            <div class="card">
+                <h4>⚙ Configurar Alcancía</h4>
+                <form th:action="@{/configurar}" method="post">
+                    <div class="form-group">
+                        <label>Nombre del ahorrista</label>
+                        <input type="text" name="nombre" class="form-control"
+                               th:value="${ahorrista}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Meta de ahorro ($)</label>
+                        <input type="number" name="meta" class="form-control"
+                               th:value="${objetivo}" step="0.01" min="0.01" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block"
+                            onclick="return confirm('Esto reiniciará el saldo a $0. ¿Continuar?')">
+                        Guardar configuración
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
