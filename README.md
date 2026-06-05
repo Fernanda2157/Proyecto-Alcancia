@@ -1,50 +1,55 @@
-# 🪙 Proyecto Alcancía: Evolución de Arquitecturas de Software
+# Proyecto Alcancía Digital — Rama 2: Monolítico por Capas
 
-Este proyecto consiste en el desarrollo de un sistema de gestión para una **Alcancía Digital**, implementado bajo tres enfoques arquitectónicos diferentes. El objetivo es demostrar la evolución del código, desde malas prácticas hasta patrones de diseño profesionales y altamente escalables.
-
-La alcancía permite realizar operaciones esenciales como:
-* Depósito de dinero (ahorrar).
-* Retiro de dinero (romper alcancía o retiros parciales).
-* Consulta de saldo actual.
-* Historial de transacciones.
+Este repositorio contiene la evolución del proyecto **Alcancía Digital** hacia una arquitectura limpia y ordenada. En esta **Rama 2**, la aplicación ha sido reestructurada bajo el patrón de diseño **Monolítico por Capas**, separando estrictamente las responsabilidades de presentación, lógica de negocio y acceso a datos para eliminar el código espagueti inicial.
 
 ---
 
-## 📑 Estructura del Proyecto (Ramas)
+## 🏛️ Arquitectura del Sistema
 
-Para evaluar el proyecto, por favor navegue entre las diferentes ramas de este repositorio. Cada una contiene el código fuente correspondiente y un `README` detallado con su justificación teórica:
+A diferencia de la versión inicial, esta rama organiza los componentes del software en capas claramente definidas:
 
-1. 🍝 **[Rama: Código Espagueti](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/codigo-espagueti)**
-   * *Descripción:* Todo el sistema (lógica, datos e interfaz) concentrado en un único flujo desestructurado. Demuestra los problemas de acoplamiento y mantenibilidad.
-   
-2. 🥞 **[Rama: Monolítico por Capas](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/monolitico-capas)**
-   * *Descripción:* Separación de responsabilidades de forma técnica en tres capas clásicas: Presentación (Controladores), Negocio (Servicios) y Datos (Repositorios).
+1. **Capa de Presentación (UI / Controladores):** 
+   * Encargada de recibir las peticiones HTTP y retornar las vistas al usuario.
+   * Desarrollada con **Thymeleaf**, **HTML5** y **CSS** para renderizar dinámicamente el estado de las alcancías (ej. barras de progreso, etiquetas de estado `ACTIVA`).
+2. **Capa de Negocio (Servicios):**
+   * Contiene toda la lógica financiera del sistema.
+   * Calcula de forma dinámica el porcentaje de progreso de ahorro, el dinero restante necesario para cumplir la meta y las validaciones correspondientes.
+3. **Capa de Datos (Persistencia / Repositorios):**
+   * Maneja el acceso a la base de datos de manera aislada, abstrayendo las consultas de la lógica de negocio mediante Spring Data JPA.
 
-3. ⬢ **[Rama: Enfoque DDD](https://github.com/TU_USUARIO/alcancia/tree/feature/enfoque-ddd)**
-   * *Descripción:* Arquitectura guiada por el dominio del negocio. Centrada en la entidad `Alcancia`, separando las reglas puras del negocio de la infraestructura tecnológica.
+---
+
+## ✨ Características de la Rama 2
+
+* **Visualización de Alcancías:** Un panel principal ("Todas las Alcancías") estructurado en tarjetas (*cards*) individuales para cada registro.
+* **Cálculo de Progreso en Tiempo Real:** Renderizado automático de barras de progreso porcentuales (ej. `9.8%` completado).
+* **Métricas Clave por Alcancía:** 
+  * **Saldo:** Dinero ahorrado actualmente.
+  * **Meta:** Objetivo financiero establecido.
+  * **Falta:** La diferencia exacta (Meta - Saldo) calculada de forma segura en la capa de negocio.
+* **Gestión de Estados:** Soporte para estados visuales del contenedor de ahorro (como la etiqueta `ACTIVA`).
+* **Operaciones Principales:** Acceso directo a la creación de nuevas alcancías (`+ Nueva Alcancía`) y auditoría de movimientos (`Ver detalle`).
 
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
-* **Lenguaje de Programación:**Java 
-* **Framework/Librerías:**  Spring Boot
-* **Persistencia:** En memoria / [Escribe aquí tu base de datos, ej: SQLite]
-* **Herramienta de Control de Versiones:** Git & GitHub
+* **Backend:** Java con **Spring Boot** (Spring MVC, Spring Data JPA).
+* **Frontend:** **Thymeleaf** para el motor de plantillas y estilos CSS responsivos.
+* **Herramientas de Desarrollo:** Git para el control de versiones ramificado.
 
 ---
----
-## ⚙️ Configuración de entorno
-Para ejecutar esta versión:
-1. Asegúrese de tener instalado **JDK 17** y **Maven**.
-2. Compile y ejecute:
-   ```bash
-   mvn clean spring-boot:run
-   Acceda a la aplicación en: http://localhost:8082/alcancia/lista
----
 
-## 🚀 Cómo ejecutar y navegar el proyecto
+## 🚀 Instalación y Ejecución Local
 
-1. Clone este repositorio en su máquina local:
+### Prerrequisitos
+* Java JDK 17 o superior.
+* Maven 3.x instalado.
+
+### Pasos para iniciar la aplicación
+
+1. **Clonar el repositorio y situarse en la rama de la evaluación:**
 ```bash
-  
+   git clone [https://github.com/Fernanda2157/Proyecto-Alcancia.git](https://github.com/Fernanda2157/Proyecto-Alcancia.git)
+   cd Proyecto-Alcancia
+   git checkout feature/monolitico-por-capas

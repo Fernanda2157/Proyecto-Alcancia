@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rama 3 — DDD</title>
+    <title>Rama 2 — Monolito por Capas</title>
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
         body { background: #f5f5f5; }
-        .header-band { background: #27ae60; color: white; padding: 18px 0; margin-bottom: 30px; }
+        .header-band { background: #2980b9; color: white; padding: 18px 0; margin-bottom: 30px; }
         .header-band h2 { margin: 0; font-size: 22px; }
         .header-band p  { margin: 4px 0 0; opacity: 0.85; font-size: 13px; }
         .badge-rama { background: rgba(255,255,255,0.25); border-radius: 4px; padding: 3px 10px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
@@ -18,14 +18,16 @@
         .stat-item { flex: 1; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 4px; padding: 8px; text-align: center; }
         .stat-item .v { font-size: 16px; font-weight: bold; color: #2c3e50; }
         .stat-item .l { font-size: 10px; color: #888; text-transform: uppercase; }
+        .badge-activa { background: #e67e22; color: white; }
+        .badge-completada { background: #27ae60; color: white; }
     </style>
 </head>
 <body>
 <div class="header-band">
     <div class="container">
-        <span class="badge-rama">DDD — Enfoque de Dominio</span>
-        <h2>🏺 Alcancía Digital — Rama 3</h2>
-        <p>Domain → Application → Infrastructure | Aggregate Root | Value Objects | Puerto 8083</p>
+        <span class="badge-rama">Monolito por Capas</span>
+        <h2>🏺 Alcancía Digital — Rama 2</h2>
+       
     </div>
 </div>
 <div class="container">
@@ -35,13 +37,13 @@
     <div class="row" style="margin-bottom:15px;">
         <div class="col-sm-8"><h3 style="margin-top:5px;">Todas las Alcancías</h3></div>
         <div class="col-sm-4 text-right">
-            <a th:href="@{/alcancia/nueva}" class="btn btn-success">+ Nueva Alcancía</a>
+            <a th:href="@{/alcancia/nueva}" class="btn btn-primary">+ Nueva Alcancía</a>
         </div>
     </div>
 
     <div th:if="${#lists.isEmpty(alcancias)}" class="text-center" style="padding:40px; color:#999;">
         <h4>No hay alcancías. Crea la primera.</h4>
-        <a th:href="@{/alcancia/nueva}" class="btn btn-success">Crear alcancía</a>
+        <a th:href="@{/alcancia/nueva}" class="btn btn-primary">Crear alcancía</a>
     </div>
 
     <div class="row" th:unless="${#lists.isEmpty(alcancias)}">
@@ -49,12 +51,12 @@
             <div class="card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                     <strong th:text="${a.nombreAhorrista}" style="font-size:16px;"></strong>
-                    <span th:if="${a.completada}"  class="label label-success">COMPLETADA</span>
-                    <span th:unless="${a.completada}" class="label label-warning">ACTIVA</span>
+                    <span class="label" th:classappend="${a.completada} ? 'badge-completada' : 'badge-activa'"
+                          th:text="${a.estado}"></span>
                 </div>
                 <div class="progress">
                     <div class="progress-bar"
-                         th:classappend="${a.completada} ? 'progress-bar-success' : 'progress-bar-success'"
+                         th:classappend="${a.completada} ? 'progress-bar-success' : 'progress-bar-info'"
                          th:style="'width:' + ${a.porcentaje} + '%'"
                          th:text="${#numbers.formatDecimal(a.porcentaje,1,1)} + '%'">
                     </div>
