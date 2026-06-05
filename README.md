@@ -14,7 +14,7 @@ La alcancía permite realizar operaciones esenciales como:
 
 Para evaluar el proyecto, por favor navegue entre las diferentes ramas de este repositorio. Cada una contiene el código fuente correspondiente y un `README` detallado con su justificación teórica:
 
-1. 🍝 **[Rama: Código Espagueti](https://github.com/TU_USUARIO/alcancia/tree/feature/codigo-espagueti)**
+1. 🍝 **[Rama: Código Espagueti](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/codigo-espagueti)**
    * *Descripción:* Todo el sistema (lógica, datos e interfaz) concentrado en un único flujo desestructurado. Demuestra los problemas de acoplamiento y mantenibilidad.
    
 2. 🥞 **[Rama: Monolítico por Capas](https://github.com/TU_USUARIO/alcancia/tree/feature/monolitico-capas)**
@@ -27,15 +27,24 @@ Para evaluar el proyecto, por favor navegue entre las diferentes ramas de este r
 
 ## 🛠️ Tecnologías Utilizadas
 
-* **Lenguaje de Programación:** [Escribe aquí tu lenguaje, ej: Python / Java / TypeScript]
-* **Framework/Librerías:** [Escribe aquí si usas alguno, ej: FastAPI / Spring Boot / Express]
+* **Lenguaje de Programación:**Java 
+* **Framework/Librerías:**  Spring Boot
 * **Persistencia:** En memoria / [Escribe aquí tu base de datos, ej: SQLite]
 * **Herramienta de Control de Versiones:** Git & GitHub
 
+---
+---
+## ⚙️ Configuración de entorno
+Para ejecutar esta versión:
+1. Asegúrese de tener instalado **JDK 17** y **Maven**.
+2. Compile y ejecute:
+   ```bash
+   mvn clean spring-boot:run
+   Acceda a la aplicación en: http://localhost:8082/alcancia/lista
 ---
 
 ## 🚀 Cómo ejecutar y navegar el proyecto
 
 1. Clone este repositorio en su máquina local:
 ```bash
-   git clone [https://github.com/TU_USUARIO/alcancia.git](https://github.com/TU_USUARIO/alcancia.git)
+  

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Alcancía de ' + ${alcancia.nombreAhorrista}">Detalle</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        body { background: #f5f5f5; }
+        .header-band { background: #2980b9; color: white; padding: 18px 0; margin-bottom: 30px; }
+        .header-band h2 { margin: 0; font-size: 22px; }
+        .header-band.done { background: #27ae60; }
+        .card { background: white; border-radius: 6px; border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+        .card h4 { margin-top:0; border-bottom: 1px solid #eee; padding-bottom:10px; }
+        .progress { height: 24px; border-radius: 12px; }
+        .progress-bar { font-size: 13px; line-height: 24px; font-weight: bold; }
+        .stat-box { text-align:center; background:#f8f9fa; border:1px solid #e9ecef; border-radius:6px; padding:12px 8px; }
+        .stat-box .v { font-size:18px; font-weight:bold; color:#2c3e50; }
+        .stat-box .l { font-size:10px; color:#888; text-transform:uppercase; }
+        .note-mvc { background:#eaf4fb; border-left:4px solid #2980b9; border-radius:4px; padding:10px 14px; font-size:12px; color:#555; margin-top:10px; }
+    </style>
+</head>
+<body>
+<div th:classappend="${alcancia.completada} ? 'done'" class="header-band">
+    <div class="container">
+        <h2>🏺 <span th:text="${alcancia.nombreAhorrista}"></span>
+            <small style="font-size:13px; margin-left:10px;">
+                <span th:if="${alcancia.completada}" class="label label-success">✓ COMPLETADA</span>
+                <span th:unless="${alcancia.completada}" class="label label-warning">ACTIVA</span>
+            </small>
+        </h2>
+    </div>
+</div>
+
+<div class="container">
+    <div th:if="${exito}" class="alert alert-success" th:text="${exito}"></div>
+    <div th:if="${error}" class="alert alert-danger"  th:text="${error}"></div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card">
+                <h4>Progreso de Ahorro</h4>
+                <div class="progress">
+                    <div class="progress-bar"
+                         th:classappend="${alcancia.completada} ? 'progress-bar-success' : 'progress-bar-info'"
+                         th:style="'width:' + ${alcancia.porcentaje} + '%; min-width:40px;'"
+                         th:text="${#numbers.formatDecimal(alcancia.porcentaje,1,1)} + '%'">
+                    </div>
+                </div>
+                <div class="row" style="margin-top:15px;">
+                    <div class="col-xs-4">
+                        <div class="stat-box">
+                            <div class="v" th:text="'$'+${alcancia.saldo}"></div>
+                            <div class="l">Saldo</div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="stat-box">
+                            <div class="v" th:text="'$'+${alcancia.meta}"></div>
+                            <div class="l">Meta</div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="stat-box">
+                            <div class="v" th:text="${alcancia.completada} ? '¡Listo!' : '$'+${#numbers.formatDecimal(alcancia.faltante,1,2)}"></div>
+                            <div class="l">Falta</div>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${alcancia.completada}" class="alert alert-success" style="margin-top:15px; margin-bottom:0;">
+                    🎉 ¡Felicidades! Meta de ahorro alcanzada.
+                </div>
+
+                <!-- Nota académica del antipatrón -->
+                <div class="note-mvc">
+                    <strong>Capa Service:</strong> manipula la entidad con setters:<br>
+                    <code>entity.setSaldo(nuevoSaldo);</code><br>
+                    <code>entity.setEstado("COMPLETADA");</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <!-- Formulario depositar -->
+            <div class="card" th:unless="${alcancia.completada}">
+                <h4>💰 Realizar Depósito</h4>
+                <form th:action="@{/alcancia/{id}/depositar(id=${alcancia.id})}" method="post">
+                    <div class="form-group">
+                        <label>Monto ($) *</label>
+                        <input type="number" name="monto" class="form-control"
+                               placeholder="Ej: 50.00" step="0.01" min="0.01" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Depositar</button>
+                </form>
+            </div>
+            <div class="card" th:if="${alcancia.completada}">
+                <h4>Estado</h4>
+                <p class="text-center" style="font-size:36px;">✅</p>
+                <p class="text-center text-muted">Alcancía completada, no admite más depósitos.</p>
+            </div>
+
+            <a th:href="@{/alcancia/lista}" class="btn btn-default btn-block" style="margin-bottom:10px;">
+                ← Volver a la lista
+            </a>
+            <form th:action="@{/alcancia/{id}/eliminar(id=${alcancia.id})}" method="post"
+                  onsubmit="return confirm('¿Eliminar esta alcancía?')">
+                <button type="submit" class="btn btn-danger btn-block">Eliminar alcancía</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

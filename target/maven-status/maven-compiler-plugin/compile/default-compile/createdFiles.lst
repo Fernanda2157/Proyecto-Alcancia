@@ -1,3 +1,5 @@
-com\example\alcancia\AlcanciaSpaghettiApplication.class
-com\example\alcancia\AlcanciaSpaghettiRepository.class
-com\example\alcancia\AlcanciaSpaghettiEntity.class
+com\example\alcancia\service\AlcanciaService.class
+com\example\alcancia\controller\AlcanciaController.class
+com\example\alcancia\AlcanciaMvcApplication.class
+com\example\alcancia\entity\AlcanciaEntity.class
+com\example\alcancia\repository\AlcanciaRepository.class
