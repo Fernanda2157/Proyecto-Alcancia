@@ -1,11 +1,9 @@
-package com.example.alcancia;
-
+package com.universidad.alcancia;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 @SpringBootApplication
-public class AlcanciaMvcApplication {
+public class AlcanciaDddApplication {
     public static void main(String[] args) {
-        SpringApplication.run(AlcanciaMvcApplication.class, args);
+        SpringApplication.run(AlcanciaDddApplication.class, args);
     }
 }

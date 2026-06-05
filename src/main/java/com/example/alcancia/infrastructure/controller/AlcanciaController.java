@@ -1,50 +1,43 @@
-package com.example.alcancia.controller;
+package com.example.alcancia.infrastructure.controller;
 
-import com.example.alcancia.service.AlcanciaService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.alcancia.application.dto.CrearAlcanciaCommand;
+import com.example.alcancia.application.service.AlcanciaApplicationService;
+import com.example.alcancia.domain.exception.AlcanciaException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/alcancia") // Ruta base de los recursos de alcancía
+@RequestMapping("/alcancia")
 public class AlcanciaController {
 
-    @Autowired
-    private AlcanciaService service;
+    private final AlcanciaApplicationService service;
 
-    // 1. Maneja la raíz del sistema y redirige a la lista
-    @GetMapping("/")
-    public String raiz() {
-        return "redirect:/alcancia/lista";
+    public AlcanciaController(AlcanciaApplicationService service) {
+        this.service = service;
     }
 
-    // 2. Maneja el acceso desde el navegador (ruta base)
-    @GetMapping("")
-    public String index() {
-        return "redirect:/alcancia/lista";
-    }
-
-    @GetMapping("/lista")
+    @GetMapping({"/", "/lista"})
     public String lista(Model model) {
         model.addAttribute("alcancias", service.listarTodas());
         return "lista";
     }
 
     @GetMapping("/nueva")
-    public String nuevaForm() {
-        return "nueva";
-    }
+    public String nuevaForm() { return "nueva"; }
 
     @PostMapping("/nueva")
     public String nuevaGuardar(@RequestParam String nombre,
-                                @RequestParam Double meta,
+                                @RequestParam double meta,
                                 RedirectAttributes flash) {
         try {
-            service.crearAlcancia(nombre, meta);
+            CrearAlcanciaCommand cmd = new CrearAlcanciaCommand();
+            cmd.setNombreAhorrista(nombre);
+            cmd.setMeta(meta);
+            service.crearAlcancia(cmd);
             flash.addFlashAttribute("exito", "Alcancía creada para " + nombre);
-        } catch (Exception e) {
+        } catch (AlcanciaException e) {
             flash.addFlashAttribute("error", e.getMessage());
             return "redirect:/alcancia/nueva";
         }
@@ -59,12 +52,12 @@ public class AlcanciaController {
 
     @PostMapping("/{id}/depositar")
     public String depositar(@PathVariable Long id,
-                             @RequestParam Double monto,
+                             @RequestParam double monto,
                              RedirectAttributes flash) {
         try {
-            String msg = service.depositar(id, monto);
-            flash.addFlashAttribute("exito", msg);
-        } catch (Exception e) {
+            var resp = service.depositar(id, monto);
+            flash.addFlashAttribute("exito", resp.getMensaje());
+        } catch (AlcanciaException e) {
             flash.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/alcancia/" + id;

@@ -2,21 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Alcancía de ' + ${alcancia.nombreAhorrista}">Detalle</title>
+    <title th:text="'DDD — ' + ${alcancia.nombreAhorrista}">Detalle DDD</title>
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
         body { background: #f5f5f5; }
-        .header-band { background: #2980b9; color: white; padding: 18px 0; margin-bottom: 30px; }
+        .header-band { background: #27ae60; color: white; padding: 18px 0; margin-bottom: 30px; }
+        .header-band.done { background: #1e8449; }
         .header-band h2 { margin: 0; font-size: 22px; }
-        .header-band.done { background: #27ae60; }
         .card { background: white; border-radius: 6px; border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
-        .card h4 { margin-top:0; border-bottom: 1px solid #eee; padding-bottom:10px; }
+        .card h4 { margin-top:0; border-bottom:1px solid #eee; padding-bottom:10px; }
         .progress { height: 24px; border-radius: 12px; }
         .progress-bar { font-size: 13px; line-height: 24px; font-weight: bold; }
         .stat-box { text-align:center; background:#f8f9fa; border:1px solid #e9ecef; border-radius:6px; padding:12px 8px; }
         .stat-box .v { font-size:18px; font-weight:bold; color:#2c3e50; }
         .stat-box .l { font-size:10px; color:#888; text-transform:uppercase; }
-        .note-mvc { background:#eaf4fb; border-left:4px solid #2980b9; border-radius:4px; padding:10px 14px; font-size:12px; color:#555; margin-top:10px; }
+        .note-ddd { background:#eafaf1; border-left:4px solid #27ae60; border-radius:4px; padding:10px 14px; font-size:12px; color:#555; margin-top:10px; }
     </style>
 </head>
 <body>
@@ -24,7 +24,7 @@
     <div class="container">
         <h2>🏺 <span th:text="${alcancia.nombreAhorrista}"></span>
             <small style="font-size:13px; margin-left:10px;">
-                <span th:if="${alcancia.completada}" class="label label-success">✓ COMPLETADA</span>
+                <span th:if="${alcancia.completada}"  class="label label-success">✓ COMPLETADA</span>
                 <span th:unless="${alcancia.completada}" class="label label-warning">ACTIVA</span>
             </small>
         </h2>
@@ -40,8 +40,7 @@
             <div class="card">
                 <h4>Progreso de Ahorro</h4>
                 <div class="progress">
-                    <div class="progress-bar"
-                         th:classappend="${alcancia.completada} ? 'progress-bar-success' : 'progress-bar-info'"
+                    <div class="progress-bar progress-bar-success"
                          th:style="'width:' + ${alcancia.porcentaje} + '%; min-width:40px;'"
                          th:text="${#numbers.formatDecimal(alcancia.porcentaje,1,1)} + '%'">
                     </div>
@@ -67,20 +66,19 @@
                     </div>
                 </div>
                 <div th:if="${alcancia.completada}" class="alert alert-success" style="margin-top:15px; margin-bottom:0;">
-                    🎉 ¡Felicidades! Meta de ahorro alcanzada.
+                    🎉 ¡Meta alcanzada! Alcancía cerrada por el Aggregate Root.
                 </div>
 
-                <!-- Nota académica del antipatrón -->
-                <div class="note-mvc">
-                    <strong>Capa Service:</strong> manipula la entidad con setters:<br>
-                    <code>entity.setSaldo(nuevoSaldo);</code><br>
-                    <code>entity.setEstado("COMPLETADA");</code>
+                <!-- Nota DDD -->
+                <div class="note-ddd">
+                    <strong>Aggregate Root:</strong> <code>alcancia.depositar(new Monto(valor))</code><br>
+                    El objeto <code>Monto</code> valida regla 1. El agregado valida reglas 2 y 3.<br>
+                    No existe <code>setSaldo()</code> ni <code>setEstado()</code> públicos.
                 </div>
             </div>
         </div>
 
         <div class="col-md-5">
-            <!-- Formulario depositar -->
             <div class="card" th:unless="${alcancia.completada}">
                 <h4>💰 Realizar Depósito</h4>
                 <form th:action="@{/alcancia/{id}/depositar(id=${alcancia.id})}" method="post">
@@ -88,14 +86,19 @@
                         <label>Monto ($) *</label>
                         <input type="number" name="monto" class="form-control"
                                placeholder="Ej: 50.00" step="0.01" min="0.01" required>
+                        <span class="help-block" style="font-size:11px;">
+                            Si el monto es ≤ 0, <code>new Monto()</code> lanza excepción
+                        </span>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">Depositar</button>
+                    <button type="submit" class="btn btn-success btn-block">Depositar</button>
                 </form>
             </div>
             <div class="card" th:if="${alcancia.completada}">
                 <h4>Estado</h4>
                 <p class="text-center" style="font-size:36px;">✅</p>
-                <p class="text-center text-muted">Alcancía completada, no admite más depósitos.</p>
+                <p class="text-center text-muted">
+                    El Aggregate Root impide depósitos en alcancías COMPLETADAS.
+                </p>
             </div>
 
             <a th:href="@{/alcancia/lista}" class="btn btn-default btn-block" style="margin-bottom:10px;">
