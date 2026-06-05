@@ -27,15 +27,19 @@ El objetivo principal es mantener la lógica de negocio aislada de los detalles 
 3. Compila el proyecto:
 ```bash
    mvn clean compile
-Ejecuta la aplicación:
+
+Ejecución de la aplicación:
+Inicia el servidor con el siguiente comando:
 
 Bash
-   mvn spring-boot:run
-Acceso al sistema: Abre tu navegador y dirígete a:
-http://localhost:8080/
+mvn spring-boot:run
+Acceso al sistema:
+Abre tu navegador y dirígete a:
+👉 http://localhost:8080/
 
-Consola de base de datos H2: Para inspeccionar los datos en tiempo real:
-http://localhost:8080/h2-console
+Consola de base de datos H2:
+Para inspeccionar los datos en tiempo real, accede a:
+👉 http://localhost:8080/h2-console
 
 JDBC URL: jdbc:h2:mem:alcancia_ddd
 
