@@ -1,50 +1,46 @@
-# 🪙 Proyecto Alcancía: Evolución de Arquitecturas de Software
+# Alcancía Digital: Proyecto de Arquitectura Hexagonal
 
-Este proyecto consiste en el desarrollo de un sistema de gestión para una **Alcancía Digital**, implementado bajo tres enfoques arquitectónicos diferentes. El objetivo es demostrar la evolución del código, desde malas prácticas hasta patrones de diseño profesionales y altamente escalables.
+Este proyecto es una implementación de una aplicación de gestión de ahorros ("Alcancía Digital") desarrollada utilizando **Arquitectura Hexagonal (Ports and Adapters)** y principios de **Domain-Driven Design (DDD)**.
 
-La alcancía permite realizar operaciones esenciales como:
-* Depósito de dinero (ahorrar).
-* Retiro de dinero (romper alcancía o retiros parciales).
-* Consulta de saldo actual.
-* Historial de transacciones.
+## 🚀 Arquitectura
+El objetivo principal es mantener la lógica de negocio aislada de los detalles técnicos (base de datos, frameworks, UI).
 
----
+- **`domain`**: Contiene las entidades (`Alcancia`), objetos de valor (`Monto`) y las reglas de negocio críticas. Es la capa más interna y no depende de ninguna tecnología externa.
+- **`application`**: Orquestación de casos de uso a través de servicios (`AlcanciaApplicationService`). Aquí se transforman comandos en acciones de negocio.
+- **`infrastructure`**: Implementación de adaptadores para la persistencia (`JPA/H2`) y los controladores web (`Spring Boot MVC`).
 
-## 📑 Estructura del Proyecto (Ramas)
+## 🛠 Tecnologías
+- **Java 17**
+- **Spring Boot 3.x**
+- **Thymeleaf** (Capa de presentación)
+- **H2 Database** (Persistencia en memoria)
+- **Maven** (Gestión de dependencias)
 
-Para evaluar el proyecto, por favor navegue entre las diferentes ramas de este repositorio. Cada una contiene el código fuente correspondiente y un `README` detallado con su justificación teórica:
+## 🎯 Características Destacadas
+1. **Validación Estricta:** La lógica de depósito asegura que la meta de ahorro sea respetada, bloqueando depósitos que excedan el monto faltante desde el modelo de dominio.
+2. **Arquitectura Desacoplada:** El dominio está protegido, permitiendo cambios en la persistencia o en el framework sin afectar las reglas de negocio.
+3. **UI Dinámica:** Visualización en tiempo real del progreso de ahorro con lógica condicional en la capa de vista.
 
-1. 🍝 **[Rama: Código Espagueti](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/codigo-espagueti)**
-   * *Descripción:* Todo el sistema (lógica, datos e interfaz) concentrado en un único flujo desestructurado. Demuestra los problemas de acoplamiento y mantenibilidad.
-   
-2. 🥞 **[Rama: Monolítico por Capas](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/monolitico-capas)**
-   * *Descripción:* Separación de responsabilidades de forma técnica en tres capas clásicas: Presentación (Controladores), Negocio (Servicios) y Datos (Repositorios).
-
-3. ⬢ **[Rama: Enfoque DDD](https://github.com/Fernanda2157/Proyecto-Alcancia/tree/feature/enfoque-ddd)**
-   * *Descripción:* Arquitectura guiada por el dominio del negocio. Centrada en la entidad `Alcancia`, separando las reglas puras del negocio de la infraestructura tecnológica.
-
----
-
-## 🛠️ Tecnologías Utilizadas
-
-* **Lenguaje de Programación:**Java 
-* **Framework/Librerías:**  Spring Boot
-* **Persistencia:** En memoria / [Escribe aquí tu base de datos, ej: SQLite]
-* **Herramienta de Control de Versiones:** Git & GitHub
-
----
----
-## ⚙️ Configuración de entorno
-Para ejecutar esta versión:
-1. Asegúrese de tener instalado **JDK 17** y **Maven**.
-2. Compile y ejecute:
-   ```bash
-   mvn clean spring-boot:run
-   Acceda a la aplicación en: http://localhost:8082/alcancia/lista
----
-
-## 🚀 Cómo ejecutar y navegar el proyecto
-
-1. Clone este repositorio en su máquina local:
+## ⚙️ Cómo ejecutar
+1. Asegúrate de tener **JDK 17** instalado.
+2. Clona el repositorio y navega a la carpeta del proyecto.
+3. Compila el proyecto:
 ```bash
-  
+   mvn clean compile
+Ejecuta la aplicación:
+
+Bash
+   mvn spring-boot:run
+Acceso al sistema: Abre tu navegador y dirígete a:
+http://localhost:8080/
+
+Consola de base de datos H2: Para inspeccionar los datos en tiempo real:
+http://localhost:8080/h2-console
+
+JDBC URL: jdbc:h2:mem:alcancia_ddd
+
+User Name: sa
+
+Password: (dejar vacío)
+
+Desarrollado para la Evaluación Sumativa de Arquitectura de Sistemas.
